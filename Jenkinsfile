@@ -150,7 +150,7 @@ pipeline {
                         url: 'https://github.com/eldada/jenkins-pipeline-kubernetes.git'
 
                 // Validate kubectl
-                sh "kubectl cluster-info"
+                sh "kubectl cluster-info dump"
 
                 // Init helm client
                 sh "helm init"
