@@ -122,7 +122,7 @@ pipeline {
 
         // The commented out parameters are for optionally using them in the pipeline.
         // In this example, the parameters are loaded from file ${JENKINS_HOME}/parameters.groovy later in the pipeline.
-        // The ${JENKINS_HOME}/parameters.groovy can be a mounted secrets file in your Jenkins container.
+         The ${JENKINS_HOME}/parameters.groovy can be a mounted secrets file in your Jenkins container.
         
         string (name: 'DOCKER_REG',       defaultValue: 'docker-artifactory.new_jenkins',          description: 'Docker registry')
         string (name: 'DOCKER_TAG',       defaultValue: 'dev',                                     description: 'Docker tag')
