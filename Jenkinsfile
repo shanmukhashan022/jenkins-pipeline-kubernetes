@@ -13,41 +13,41 @@
 /*
     Create the kubernetes namespace
  */
-def createNamespace (namespace) {
-    echo "Creating namespace ${namespace} if needed"
+//def createNamespace (namespace) {
+  //  echo "Creating namespace ${namespace} if needed"
 
-    sh "[ "\$(kubectl get ns ${namespace} -o name 2>/dev/null)\" ] || kubectl create ns ${namespace}"
-}
+    //sh "[ "\$(kubectl get ns ${namespace} -o name 2>/dev/null)\" ] || kubectl create ns ${namespace}"
+//}
 
 /*
     Helm install
  */
-def helmInstall (namespace, release) {
-    echo "Installing ${release} in ${namespace}"
+//def helmInstall (namespace, release) {
+  //  echo "Installing ${release} in ${namespace}"
 
-    script {
-        release = "${release}-${namespace}"
-        sh "helm repo add helm ${HELM_REPO}; helm repo update"
-        sh """
-            helm upgrade --install --namespace ${namespace} ${release} \
-                --set imagePullSecrets=${IMG_PULL_SECRET} \
-                --set image.repository=${DOCKER_REG}/${IMAGE_NAME},image.tag=${DOCKER_TAG} helm/acme
-        """
-        sh "sleep 5"
-    }
-}
+    //script {
+      //  release = "${release}-${namespace}"
+        //sh "helm repo add helm ${HELM_REPO}; helm repo update"
+        //sh """
+          //  helm upgrade --install --namespace ${namespace} ${release} \
+            //    --set imagePullSecrets=${IMG_PULL_SECRET} \
+              //  --set image.repository=${DOCKER_REG}/${IMAGE_NAME},image.tag=${DOCKER_TAG} helm/acme
+        //"""
+        //sh "sleep 5"
+    //}
+//}
 
 /*
     Helm delete (if exists)
  */
-def helmDelete (namespace, release) {
-    echo "Deleting ${release} in ${namespace} if deployed"
+//def helmDelete (namespace, release) {
+  //  echo "Deleting ${release} in ${namespace} if deployed"
 
-    script {
-        release = "${release}-${namespace}"
-        sh "[ -z \"\$(helm ls --short ${release} 2>/dev/null)\" ] || helm delete --purge ${release}"
-    }
-}
+    //script {
+      //  release = "${release}-${namespace}"
+        //sh "[ -z \"\$(helm ls --short ${release} 2>/dev/null)\" ] || helm delete --purge ${release}"
+    //}
+//}
 
 /*
     Run a curl against a given url
