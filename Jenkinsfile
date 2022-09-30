@@ -1,6 +1,5 @@
 /*
     This is an example pipeline that implement full CI/CD for a simple static web site packed in a Docker image.
-
     The pipeline is made up of 6 main steps
     1. Git clone and setup
     2. Build and local tests
@@ -112,7 +111,7 @@ pipeline {
         IMAGE_NAME = 'acme'
         TEST_LOCAL_PORT = 8817
         DEPLOY_PROD = false
-        PARAMETERS_FILE = "${/home/ubuntu/var/lib/jenkins}/parameters.groovy"
+        PARAMETERS_FILE = "${JENKINS_HOME}/parameters.groovy"
     }
 
     parameters {
@@ -123,13 +122,12 @@ pipeline {
         // The commented out parameters are for optionally using them in the pipeline.
         // In this example, the parameters are loaded from file ${JENKINS_HOME}/parameters.groovy later in the pipeline.
         // The ${JENKINS_HOME}/parameters.groovy can be a mounted secrets file in your Jenkins container.
-        
-        string (name: 'DOCKER_REG',       defaultValue: 'docker-artifactory.my',          description: 'Docker registry')
+/*
+        string (name: 'DOCKER_REG',       defaultValue: 'docker-artifactory.my',                   description: 'Docker registry')
         string (name: 'DOCKER_TAG',       defaultValue: 'dev',                                     description: 'Docker tag')
-        string (name: 'DOCKER_USR',       defaultValue: 'shanmukhashan022',                        description: 'Your helm repository user')
-        string (name: 'DOCKER_PSW',       defaultValue: '12287M022@s',                             description: 'Your helm repository password')
-        
-/*      string (name: 'IMG_PULL_SECRET',  defaultValue: 'new_jenkins',                             description: 'The Kubernetes secret for the Docker registry (imagePullSecrets)')
+        string (name: 'DOCKER_USR',       defaultValue: 'admin',                                   description: 'Your helm repository user')
+        string (name: 'DOCKER_PSW',       defaultValue: 'password',                                description: 'Your helm repository password')
+        string (name: 'IMG_PULL_SECRET',  defaultValue: 'docker-reg-secret',                       description: 'The Kubernetes secret for the Docker registry (imagePullSecrets)')
         string (name: 'HELM_REPO',        defaultValue: 'https://artifactory.my/artifactory/helm', description: 'Your helm repository')
         string (name: 'HELM_USR',         defaultValue: 'admin',                                   description: 'Your helm repository user')
         string (name: 'HELM_PSW',         defaultValue: 'password',                                description: 'Your helm repository password')
@@ -151,10 +149,10 @@ pipeline {
                         url: 'https://github.com/shanmukhashan022/jenkins-pipeline-kubernetes.git'
 
                 // Validate kubectl
-               // sh "kubectl cluster-info"
+                sh "kubectl cluster-info"
 
                 // Init helm client
-                //sh "helm init"
+                sh "helm init"
 
                 // Make sure parameters file exists
                 script {
@@ -172,13 +170,8 @@ pipeline {
                 // Define a unique name for the tests container and helm release
                 script {
                     branch = GIT_BRANCH.replaceAll('/', '-').replaceAll('\\*', '-')
-                    ID = "${credentialsId}"
+                    ID = "${IMAGE_NAME}-${DOCKER_TAG}-${branch}"
 
-                stage('Push to Docker Registry'){
-                    withCredentials([usernamePassword(credentialsId: 'shandocker', usernameVariable: 'shanmukhashan022', passwordVariable: '12287M022@s')]) {
-                    pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
-                     }
-                }
                     echo "Global ID set to ${ID}"
                 }
             }
