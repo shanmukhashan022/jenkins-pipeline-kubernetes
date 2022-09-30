@@ -153,7 +153,7 @@ pipeline {
                // sh "kubectl cluster-info"
 
                 // Init helm client
-                sh "helm init"
+                sh "helm init --service-account=tiller --tiller-image=gcr.io/kubernetes"
 
                 // Make sure parameters file exists
                 script {
