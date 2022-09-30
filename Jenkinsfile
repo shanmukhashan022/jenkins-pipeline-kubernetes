@@ -107,7 +107,7 @@ pipeline {
     }
 
     // Some global default variables
-    environment {
+  /*  environment {
         IMAGE_NAME = 'acme'
         TEST_LOCAL_PORT = 8817
         DEPLOY_PROD = false
@@ -155,12 +155,12 @@ pipeline {
                 //sh "helm init"
 
                 // Make sure parameters file exists
-                script {
+              /*  script {
                     if (! fileExists("${PARAMETERS_FILE}")) {
                         echo "ERROR: ${PARAMETERS_FILE} is missing!"
                     }
                 }
-
+*/
                 // Load Docker registry and Helm repository configurations from file
               //  load "${JENKINS_HOME}/parameters.groovy"
 
