@@ -13,7 +13,7 @@
 /*
     Create the kubernetes namespace
  */
-def createNamespace (my_namespace) {
+def createNamespace (namespace) {
     echo "Creating namespace ${namespace} if needed"
 
     sh "[ ! -z \"\$(kubectl get ns ${namespace} -o name 2>/dev/null)\" ] || kubectl create ns ${namespace}"
@@ -150,7 +150,7 @@ pipeline {
                         url: 'https://github.com/eldada/jenkins-pipeline-kubernetes.git'
 
                 // Validate kubectl
-                sh "kubectl cluster-info dump"
+               // sh "kubectl cluster-info"
 
                 // Init helm client
                 sh "helm init"
