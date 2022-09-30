@@ -136,7 +136,7 @@ pipeline {
     }
 
     // In this example, all is built and run from the master
-    agent all
+    agent any
 
     // Pipeline stages
     stages {
