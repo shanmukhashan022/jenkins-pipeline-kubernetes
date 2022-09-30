@@ -123,13 +123,14 @@ pipeline {
         // The commented out parameters are for optionally using them in the pipeline.
         // In this example, the parameters are loaded from file ${JENKINS_HOME}/parameters.groovy later in the pipeline.
         // The ${JENKINS_HOME}/parameters.groovy can be a mounted secrets file in your Jenkins container.
-/*
-        string (name: 'DOCKER_REG',       defaultValue: 'docker-artifactory.my',                   description: 'Docker registry')
+        
+        string (name: 'DOCKER_REG',       defaultValue: 'docker-artifactory.new_jenkins',          description: 'Docker registry')
         string (name: 'DOCKER_TAG',       defaultValue: 'dev',                                     description: 'Docker tag')
-        string (name: 'DOCKER_USR',       defaultValue: 'admin',                                   description: 'Your helm repository user')
-        string (name: 'DOCKER_PSW',       defaultValue: 'password',                                description: 'Your helm repository password')
-        string (name: 'IMG_PULL_SECRET',  defaultValue: 'docker-reg-secret',                       description: 'The Kubernetes secret for the Docker registry (imagePullSecrets)')
-        string (name: 'HELM_REPO',        defaultValue: 'https://artifactory.my/artifactory/helm', description: 'Your helm repository')
+        string (name: 'DOCKER_USR',       defaultValue: 'shanmukhashan022',                        description: 'Your helm repository user')
+        string (name: 'DOCKER_PSW',       defaultValue: '12287M022@s',                             description: 'Your helm repository password')
+        string (name: 'IMG_PULL_SECRET',  defaultValue: 'new_jenkins',                             description: 'The Kubernetes secret for the Docker registry (imagePullSecrets)')
+       
+/*      string (name: 'HELM_REPO',        defaultValue: 'https://artifactory.my/artifactory/helm', description: 'Your helm repository')
         string (name: 'HELM_USR',         defaultValue: 'admin',                                   description: 'Your helm repository user')
         string (name: 'HELM_PSW',         defaultValue: 'password',                                description: 'Your helm repository password')
 */
@@ -146,8 +147,8 @@ pipeline {
             steps {
                 echo "Check out acme code"
                 git branch: "master",
-                        credentialsId: 'eldada-bb',
-                        url: 'https://github.com/eldada/jenkins-pipeline-kubernetes.git'
+                        credentialsId: 'gituser',
+                        url: 'https://github.com/shanmukhashan022/jenkins-pipeline-kubernetes.git'
 
                 // Validate kubectl
                // sh "kubectl cluster-info"
