@@ -128,9 +128,9 @@ pipeline {
         string (name: 'DOCKER_TAG',       defaultValue: 'dev',                                     description: 'Docker tag')
         string (name: 'DOCKER_USR',       defaultValue: 'shanmukhashan022',                        description: 'Your helm repository user')
         string (name: 'DOCKER_PSW',       defaultValue: '12287M022@s',                             description: 'Your helm repository password')
-        string (name: 'IMG_PULL_SECRET',  defaultValue: 'new_jenkins',                             description: 'The Kubernetes secret for the Docker registry (imagePullSecrets)')
-       
-/*      string (name: 'HELM_REPO',        defaultValue: 'https://artifactory.my/artifactory/helm', description: 'Your helm repository')
+        
+/*      string (name: 'IMG_PULL_SECRET',  defaultValue: 'new_jenkins',                             description: 'The Kubernetes secret for the Docker registry (imagePullSecrets)')
+        string (name: 'HELM_REPO',        defaultValue: 'https://artifactory.my/artifactory/helm', description: 'Your helm repository')
         string (name: 'HELM_USR',         defaultValue: 'admin',                                   description: 'Your helm repository user')
         string (name: 'HELM_PSW',         defaultValue: 'password',                                description: 'Your helm repository password')
 */
@@ -172,8 +172,13 @@ pipeline {
                 // Define a unique name for the tests container and helm release
                 script {
                     branch = GIT_BRANCH.replaceAll('/', '-').replaceAll('\\*', '-')
-                    ID = "${IMAGE_NAME}-${DOCKER_TAG}-${branch}"
+                    ID = "${credentialsId}"
 
+                stage('Push to Docker Registry'){
+                    withCredentials([usernamePassword(credentialsId: 'shandocker', usernameVariable: 'shanmukhashan022', passwordVariable: '12287M022@s')]) {
+                    pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
+                     }
+                }
                     echo "Global ID set to ${ID}"
                 }
             }
