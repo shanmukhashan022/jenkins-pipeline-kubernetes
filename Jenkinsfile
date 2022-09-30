@@ -112,7 +112,7 @@ pipeline {
         IMAGE_NAME = 'acme'
         TEST_LOCAL_PORT = 8817
         DEPLOY_PROD = false
-        PARAMETERS_FILE = "${JENKINS_HOME}/parameters.groovy"
+        PARAMETERS_FILE = "${/home/ubuntu/var/lib/jenkins}/parameters.groovy"
     }
 
     parameters {
@@ -122,9 +122,9 @@ pipeline {
 
         // The commented out parameters are for optionally using them in the pipeline.
         // In this example, the parameters are loaded from file ${JENKINS_HOME}/parameters.groovy later in the pipeline.
-         The ${JENKINS_HOME}/parameters.groovy can be a mounted secrets file in your Jenkins container.
+        // The ${JENKINS_HOME}/parameters.groovy can be a mounted secrets file in your Jenkins container.
         
-        string (name: 'DOCKER_REG',       defaultValue: 'docker-artifactory.new_jenkins',          description: 'Docker registry')
+        string (name: 'DOCKER_REG',       defaultValue: 'docker-artifactory.my',          description: 'Docker registry')
         string (name: 'DOCKER_TAG',       defaultValue: 'dev',                                     description: 'Docker tag')
         string (name: 'DOCKER_USR',       defaultValue: 'shanmukhashan022',                        description: 'Your helm repository user')
         string (name: 'DOCKER_PSW',       defaultValue: '12287M022@s',                             description: 'Your helm repository password')
